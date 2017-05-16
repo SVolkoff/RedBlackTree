@@ -1,4 +1,4 @@
-
+[![Build Status](https://travis-ci.org/SVolkoff/RedBlackTree.svg?branch=master)](https://travis-ci.org/SVolkoff/RedBlackTree)
 
 - [x] constructor
 - [x] destructor

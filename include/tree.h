@@ -3,16 +3,15 @@
 
 
 typedef enum { BLACK, RED } nodeColor;
-//#define NIL &leaf          /* all leafs are sentinels */
-//Node<T> leaf = { NIL, NIL, 0, BLACK, 0 };
+
 
 
 template <class T> struct Node {
 	Node<T>* left;
-	Node<T>* right;        /* right child */
-	Node<T>* parent;       /* parent */
-	nodeColor color;            /* node color (BLACK, RED) */
-	T data;                    /* data stored in node */
+	Node<T>* right;       
+	Node<T>* parent;       
+	nodeColor color;            
+	T data;                 
 };
 template <class T> class Tree
 {
@@ -81,11 +80,9 @@ void Tree<T>::rotate_left(Node<T> *x)
 {
 	Node<T> *y = x->right;
 
-	/* establish x->right link */
 	x->right = y->left;
 	if (y->left != nullptr) y->left->parent = x;
 
-	/* establish y->parent link */
 	if (y != nullptr) y->parent = x->parent;
 	if (x->parent) {
 		if (x == x->parent->left)
@@ -97,7 +94,6 @@ void Tree<T>::rotate_left(Node<T> *x)
 		root = y;
 	}
 
-	/* link x and y */
 	y->left = x;
 	if (x != nullptr) x->parent = y;
 }
@@ -107,11 +103,10 @@ void Tree<T>::rotate_right(Node<T> *x)
 {
 		Node<T> *y = x->left;
 
-		/* establish x->left link */
 		x->left = y->right;
 		if (y->right != nullptr) y->right->parent = x;
 
-		/* establish y->parent link */
+
 		if (y != nullptr) y->parent = x->parent;
 		if (x->parent) {
 			if (x == x->parent->right)
@@ -123,7 +118,6 @@ void Tree<T>::rotate_right(Node<T> *x)
 			root = y;
 		}
 
-		/* link x and y */
 		y->right = x;
 		if (x != nullptr) x->parent = y;
 }
@@ -161,28 +155,27 @@ void Tree<T>::insertNode(T data)
 
 		while (x != root && x->parent->color == RED) 
 		{
-			/* we have a violation */
-			if (x->parent == x->parent->parent->left) {
+			
+			if (x->parent == x->parent->parent->left) 
+			{
 				Node<T> *uncle = x->parent->parent->right;
 				if( uncle == nullptr || uncle->color == BLACK)
 				{
-					/* uncle is BLACK */
-					if (x == x->parent->right) {
-						/* make x a left child */
+					
+					if (x == x->parent->right) 
+					{
 						x = x->parent;
 						rotate_left(x);
-						
 					}
 
-					/* recolor and rotate */
+					
 					x->parent->color = BLACK;
 					x->parent->parent->color = RED;
 					rotate_right(x->parent->parent);
 				}
 				else
-				//if (uncle->color == RED) 
+				
 				{
-					/* uncle is RED */
 					x->parent->color = BLACK;
 					uncle->color = BLACK;
 					x->parent->parent->color = RED;
@@ -190,14 +183,11 @@ void Tree<T>::insertNode(T data)
 				}
 			}
 			else {
-
-				/* mirror image of above code */
 				Node<T> *uncle = x->parent->parent->left;
 				if (uncle == nullptr || uncle->color == BLACK) 
 				{
-
-					/* uncle is BLACK */
-					if (x == x->parent->left) {
+					if (x == x->parent->left) 
+					{
 						x = x->parent;
 						rotate_right(x);
 					}
@@ -207,8 +197,6 @@ void Tree<T>::insertNode(T data)
 				} 
 				else
 				{
-
-					/* uncle is RED */
 					x->parent->color = BLACK;
 					uncle->color = BLACK;
 					x->parent->parent->color = RED;
